@@ -1,10 +1,16 @@
 module.exports = {
     newFlight,
     create,
-    allFlights
+    allFlights,
+    show
 }
 
 const Flight = require("../models/flight");
+
+async function show (req, res){
+    const flight = await Flight.findById(req.params.id);
+    res.render('flight/show', { title: 'Flight Details', flight });
+}
 
 async function allFlights (req, res){
 
