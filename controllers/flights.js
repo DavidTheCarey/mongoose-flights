@@ -6,10 +6,12 @@ module.exports = {
 }
 
 const Flight = require("../models/flight");
+const Ticket = require("../models/ticket");
 
 async function show (req, res){
     const flight = await Flight.findById(req.params.id);
-    res.render('flight/show', { title: 'Flight Details', flight });
+    const tickets = await Ticket.find({ flight: flight._id })
+    res.render('flight/show', { title: 'Flight Details', flight, tickets });
 }
 
 async function allFlights (req, res){
@@ -28,7 +30,7 @@ function newFlight (req, res){
 // pause and wait to see if database accepts user info
 async function create(req, res) {
 
-    console.log(req.body.departs);
+
 
     try {
       await Flight.create(req.body);
